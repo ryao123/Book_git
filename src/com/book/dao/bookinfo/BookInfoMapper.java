@@ -35,4 +35,10 @@ public interface BookInfoMapper {
 	//增加
 	int addBook(@Param("info") Info info);
 
+	//id查询
+	List<Info> findBook(int id);
+
+	//修改
+	int update(Info info);
+
 }

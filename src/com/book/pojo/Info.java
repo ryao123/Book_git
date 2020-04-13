@@ -58,14 +58,8 @@ public class Info {
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
-	public Info(String bookName, String author, int categoryId, String publisher, double price, String photo) {
+	public Info() {
 		super();
-		this.bookName = bookName;
-		this.author = author;
-		this.categoryId = categoryId;
-		this.publisher = publisher;
-		this.price = price;
-		this.photo = photo;
 	}
 	
 	

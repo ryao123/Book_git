@@ -53,11 +53,49 @@ public class BookInfoController extends HttpServlet {
 			findByname(req,resp);
 		}else if ("addBook".equals(op)) {
 			addBook(req,resp);
+		}else if ("findId".equals(op)) {
+			findId(req,resp);
+		}else if ("update".equals(op)) {
+			update(req,resp);
 		}
+		
 	}
     
     
-    //图书增加
+    private void update(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
+    	String bookName =req.getParameter("bookName");
+		String author = req.getParameter("author");
+		int categoryId = Integer.parseInt(req.getParameter("categoryId"));
+		Double price = Double.parseDouble(req.getParameter("price"));
+		String publisher = req.getParameter("publisher");
+		// photo=req.getParameter("photo");
+		System.out.println(bookName);
+		Info info=new Info();
+		info.setBookName(bookName);
+		info.setAuthor(author);
+		info.setCategoryId(categoryId);
+		info.setPrice(price);
+		info.setPublisher(publisher);
+		boolean isOk=bis.update(info);
+		if(isOk) {
+			Index(req,resp);
+		}
+		
+	}
+
+	private void findId(HttpServletRequest req, HttpServletResponse resp)  throws ServletException, IOException{
+    	
+    	int id=Integer.parseInt(req.getParameter("id"));
+    	System.out.println(id);
+		List list=bis.findBook(id);
+		if (list!=null) {
+			req.getSession().setAttribute("li",list);
+			resp.sendRedirect("admin/book-edit.jsp");
+		}
+	
+	}
+
+	//图书增加
 	private void addBook(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		resp.setContentType("application/json;charset=UTF-8");
 		//获取页面数据
@@ -66,9 +104,14 @@ public class BookInfoController extends HttpServlet {
 		int categoryId = Integer.parseInt(req.getParameter("categoryId"));
 		Double price = Double.parseDouble(req.getParameter("price"));
 		String publisher = req.getParameter("publisher");
-		String photo=req.getParameter("photo");
-		Info info=new Info(bookName, author, categoryId, publisher, price, photo);
-		
+		// photo=req.getParameter("photo");
+		System.out.println(bookName);
+		Info info=new Info();
+		info.setBookName(bookName);
+		info.setAuthor(author);
+		info.setCategoryId(categoryId);
+		info.setPrice(price);
+		info.setPublisher(publisher);
 		boolean isOk=bis.addBook(info);
 		if(isOk) {
 			Index(req,resp);

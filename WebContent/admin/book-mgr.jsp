@@ -39,7 +39,6 @@
 			    		<td>${b.cate.category }</td>
 			    		<td>${b.price }</td>
 			    		<td><a href="${pageContext.request.contextPath}/bookController?op=deleteBook&id=${b.id }">删除</a>&nbsp;
-			    		<a href="book-edit.jsp">编辑1</a>
 			    		<a href="${pageContext.request.contextPath}/bookController?op=findId&id=${b.id }">编辑</a></td>
 			    		
 			    	</tr>

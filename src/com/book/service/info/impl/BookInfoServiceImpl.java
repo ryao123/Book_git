@@ -107,5 +107,32 @@ public class BookInfoServiceImpl implements BookInfoService {
 	}
 
 
+	//id查询
+	@Override
+	public List findBook(int id) {
+		sqlSession=MyBatisUtils.createSqlSession();
+		List<Info> list=sqlSession.getMapper(BookInfoMapper.class).findBook(id);
+		MyBatisUtils.closeSqlSession(sqlSession);
+		return list;
+	}
+
+
+	//修改
+	@Override
+	public boolean update(Info info) {
+		sqlSession=MyBatisUtils.createSqlSession();
+		int result=sqlSession.getMapper(BookInfoMapper.class).update(info);
+		if(result>0) {
+			sqlSession.commit();
+			MyBatisUtils.closeSqlSession(sqlSession);
+			return true;
+		}else {
+			sqlSession.rollback();
+			MyBatisUtils.closeSqlSession(sqlSession);
+		}
+		return false;
+	}
+
+
 	
 }

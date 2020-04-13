@@ -60,6 +60,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
  
 	 <!-- 图书增加  -->
- 	
+	 <insert id="addBook" >
+	 	insert into system_book_info(bookName,author,categoryId,publisher,price)
+	 	values(#{bookName},#{author},#{categoryId},#{publisher},#{price})
+	 
+	 </insert>
+	 
+ 	<select id="findBook" resultMap="blist" >
+		SELECT b.*,c.* FROM system_book_info b
+			INNER  JOIN system_book_category c ON(b.categoryId=c.id )
+			<where>
+				b.id=#{id}
+			</where>
+	</select>
+	
+	<update id="update">
+		update system_book_info
+		<set>
+			bookName=#{bookName}, author=#{author}, categoryId=#{categoryId}, publisher=#{publisher}, price=#{price}
+		</set>
+		<where>
+				id=#{id}
+		</where>
+	</update>
  
  </mapper>

@@ -26,5 +26,9 @@ public interface BookInfoService {
 	boolean deleteBook(int id);
 	//增加
 	boolean addBook(Info info);
+	//id查找
+	List findBook(int id);
+	//修改
+	boolean update(Info info);
 
 }

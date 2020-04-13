@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE HTML>
 <html>
   <head>
@@ -21,25 +22,30 @@
     	<div id="main">
 			<div class="section-left">    	
 				<h2>编辑图书信息</h2>
-				<form action="book-edit.html" method="post">
-					<input type="hidden" name="bookId" value="1" />
-					<input type="hidden" name="bphotoOld" value="fzdxl.jpg" />
-					<p>图书书名：<input type="text" name="btitle" value="非洲的旋律"  /></p>
-					<p>图书作者：<input type="text" name="bauthor" value="李艳玲"  /></p>
-					<p>图书分类：
-						<select name="bcategoryid">									
-							<option value="1">地图地理</option>	
-							<option value="2">恐怖小说</option>	
-							<option value="3">文学</option>	
-							<option value="4">科普读物</option>
-						</select>
-					</p>
-					<p>图书售价：<input type="text" name="bprice" value="66.0" /></p>
-					<p>图书出版社：<input type="text" name="bpublisher" value="金城出版社"  /></p>  
-					<p>当前图片：<img width="150" height="90" src="photo/fzdxl.jpg" /></p> 
-					<p>图书图片：<input type="file" name="bphoto"  /></p>    				 				
-					<p><input type="submit" value=" 修 改 "  />&nbsp;</p>					
-				</form>
+				<c:forEach items="${li }" var="li">
+					<form action="${pageContext.request.contextPath}/BookInfoController?op=update&id=${li.id}" method="post" id="#apk_add_form">
+						<p>图书书名：<input type="text" name="bookName" value="${li.bookName }"  /></p>
+						<p>图书作者：<input type="text" name="author" value="${li.author }"  /></p>
+						<p>图书分类：
+								<select name="categoryid">		
+									<c:forEach items="${Clist }" var="c">		
+										<c:if test="${c.id==li.categoryId }" var="t">
+											<option value="${c.id }"   selected ="selected">${c.category }</option>
+										</c:if>		
+										<c:if test="${!t }">
+											<option value="${c.id }">${cc.category }</option>
+										</c:if>				
+									</c:forEach>
+								</select>
+						</p>
+						<p>图书售价：<input type="text" name="price" value="${li.price }" /></p>
+						<p>图书出版社：<input type="text" name="publisher" value="${li.publisher }"  /></p>  
+						<p>当前图片：
+							<img width="150" height="90" src="${pageContext.request.contextPath}/static/photo/${li.photo}"/></p> 
+										 				
+						<p><input type="submit" value=" 修 改 " id="add"/>&nbsp;</p>		
+					</form>
+				 </c:forEach>		
 			</div>
 			<div class="section-right"></div>			
 			<div class="cf"></div>
