@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.book.dao.bookinfo.BookInfoMapper">
+ 
+	<!-- 获得所有图书信息 -->
+	<select id="getBookList" resultMap="blist">
+		SELECT b.,c.category FROM system_book_info b
+		INNER  JOIN system_book_category c 
+		ON(b.categoryId=c.id ) 
+	</select>
+	
+	<select id="getCateList" resultType="Category">
+		SELECT * from system_book_category
+	</select>
+	
+	<resultMap type="Info" id="blist" autoMapping="true">
+		<association property="cate" javaType="Category">
+			<result column="category" property="category"/>
+		</association>
+	</resultMap> 
+ 	
+ 	
+ 	<!-- 数据总条数 -->
+	<select id="getCount" resultType="Integer">
+		select count(1) from system_book_info
+	</select>
+	<!-- 获得分页数据 -->
+	<select id="getPageLists" resultMap="blist">
+		SELECT b.*,c.category FROM system_book_info b
+			INNER  JOIN system_book_category c ON(b.categoryId=c.id )
+			limit #{from},#{pageSize}
+	</select>
+	
+	
+	<!-- 根据分类id查询 -->
+	<select id="findByid" resultMap="blist">
+		SELECT b.*,c.category FROM system_book_info b
+			INNER  JOIN system_book_category c ON(b.categoryId=c.id )
+			
+			<where>
+				<if test="id!=0">
+					and c.id=#{id}
+				</if>
+			</where>
+	</select>
+	
+	<!-- 根据name查询 -->
+	<select id="findByname" resultMap="blist">
+		SELECT b.*,c.category FROM system_book_info b
+			INNER  JOIN system_book_category c ON(b.categoryId=c.id )
+			<where>
+				bookName like concat('%',#{bookName},'%')
+			</where>
+	</select>
+	
+	<delete id="deleteBook"  >
+		DELETE FROM system_book_info WHERE id=#{id}
+	</delete>
+ 
+	 <!-- 图书增加  -->
+ 	
+ 
+ </mapper>

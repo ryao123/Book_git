@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 加载数据源的配置文件 -->
+	<properties resource="datasource.properties"></properties>
+	<!-- 配置日志 -->
+	<settings>
+		<setting name="logImpl" value="LOG4J"/>
+	</settings>
+	<!-- 配置别名 -->
+	<typeAliases>
+		<package name="com.book.pojo"/>
+	</typeAliases>
+	<!-- 配置环境 -->
+	<environments default="dev_mysql">
+		<!-- 配置环境变量 -->
+		<environment id="dev_mysql">
+			<!-- 配置事务，默认使用JDBC -->
+			<transactionManager type="JDBC"></transactionManager>
+			<!-- 配置数据源，采用mybatis自带的数据源 -->
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}"/>
+				<property name="url" value="${url}"/>
+				<property name="username" value="${username}"/>
+				<property name="password" value="${password}"/>
+			</dataSource>
+		</environment>
+	</environments>
+	<!-- 配置sql映射文件的引用 -->
+	<mappers>
+		<!-- 自动扫描dao中的映射文件 -->
+		<package name="com.book.dao"/>
+	</mappers>
+</configuration>
